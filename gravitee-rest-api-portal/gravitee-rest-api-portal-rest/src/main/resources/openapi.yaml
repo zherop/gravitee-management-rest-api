@@ -1348,7 +1348,25 @@ paths:
           $ref: '#/components/responses/PictureSuccess'
         500:
           $ref: '#/components/responses/InternalServerError'
-
+  /user/_reset_password:
+    post:
+      tags:
+        - User
+      summary: Reset user password
+      description: |
+        Send an email with a link so the user can provide a new password.
+      operationId: resetUserPassword
+      requestBody:
+        description: Use to reset current user's password.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetUserPasswordInput'
+      responses:
+        204:
+          description: No-Content
+        500:
+          $ref: '#/components/responses/InternalServerError'
   /tickets:
     post:
       tags:
@@ -2976,6 +2994,11 @@ components:
           type: string
         lastname:
           description: Last name of the registered user.
+          type: string
+    ResetUserPasswordInput:
+      properties:
+        reset_page_url:
+          description: URL of the password reset page to be used in the 'Password reset' email.
           type: string
     #######################
     # Composition Objects #

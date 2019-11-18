@@ -18,6 +18,7 @@ package io.gravitee.rest.api.portal.rest.resource;
 import io.gravitee.common.http.MediaType;
 import io.gravitee.rest.api.model.*;
 import io.gravitee.rest.api.portal.rest.mapper.UserMapper;
+import io.gravitee.rest.api.portal.rest.model.ResetUserPasswordInput;
 import io.gravitee.rest.api.portal.rest.model.User;
 import io.gravitee.rest.api.portal.rest.utils.PortalApiLinkHelper;
 import io.gravitee.rest.api.service.UserService;
@@ -57,17 +58,15 @@ public class UserResource extends AbstractResource {
 
         User currentUser = userMapper.convert(userEntity);
         currentUser.setLinks(userMapper.computeUserLinks(PortalApiLinkHelper.userURL(uriInfo.getBaseUriBuilder())));
-        
-        return Response
-                .ok(currentUser)
-                .build();
+
+        return Response.ok(currentUser).build();
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateCurrentUser(@Valid @NotNull(message = "Input must not be null.") User user) {
-        if(!getAuthenticatedUser().equals(user.getId())) {
+        if (!getAuthenticatedUser().equals(user.getId())) {
             throw new UnauthorizedAccessException();
         }
 
@@ -79,12 +78,10 @@ public class UserResource extends AbstractResource {
 
         UserEntity updatedUser = userService.update(user.getId(), updateUserEntity);
 
-        return Response
-                .ok(userMapper.convert(updatedUser))
-                .build();
+        return Response.ok(userMapper.convert(updatedUser)).build();
 
     }
-    
+
     @GET
     @Path("avatar")
     public Response getCurrentUserAvatar(@Context Request request) {
@@ -101,7 +98,15 @@ public class UserResource extends AbstractResource {
 
         return createPictureReponse(request, (InlinePictureEntity) picture);
     }
-    
+
+    @POST
+    @Path("_reset_password")
+    public Response resetUserPassword(@NotNull(message = "Input must not be null.") @Valid ResetUserPasswordInput resetUserPasswordInput) {
+        String userId = getAuthenticatedUser();
+        userService.resetPassword(userId, resetUserPasswordInput.getResetPageUrl());
+        return Response.noContent().build();
+    }
+
     @Path("notifications")
     public UserNotificationsResource getUserNotificationsResource() {
         return resourceContext.getResource(UserNotificationsResource.class);

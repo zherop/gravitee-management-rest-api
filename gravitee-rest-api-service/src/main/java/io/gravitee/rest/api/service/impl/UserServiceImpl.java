@@ -536,7 +536,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     
     @Override
     public Map<String, Object> getTokenRegistrationParams(final UserEntity userEntity, final String portalUri,
-                                                          final ACTION action, final String confirmationPageUrl) {
+                                                          final ACTION action, final String targetPageUrl) {
         // generate a JWT to store user's information and for security purpose
         final Map<String, Object> claims = new HashMap<>();
         claims.put(Claims.ISSUER, environment.getProperty("jwt.issuer", DEFAULT_JWT_ISSUER));
@@ -563,9 +563,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
         
         
         String registrationUrl= "";
-        if (confirmationPageUrl != null && !confirmationPageUrl.isEmpty()) {
-            registrationUrl += confirmationPageUrl;
-            if(!confirmationPageUrl.endsWith("/")) {
+        if (targetPageUrl != null && !targetPageUrl.isEmpty()) {
+            registrationUrl += targetPageUrl;
+            if(!targetPageUrl.endsWith("/")) {
                 registrationUrl += "/";
             }
             registrationUrl += token;
@@ -750,6 +750,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
     @Override
     public void resetPassword(final String id) {
+        this.resetPassword(id, null);
+    }
+            
+    @Override
+    public void resetPassword(final String id, final String resetPageUrl) {
         try {
             LOGGER.debug("Resetting password of user id {}", id);
 
@@ -767,7 +772,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             userRepository.update(user);
 
             final Map<String, Object> params = getTokenRegistrationParams(convert(user, false),
-                    RESET_PASSWORD_PATH, RESET_PASSWORD);
+                    RESET_PASSWORD_PATH, RESET_PASSWORD, resetPageUrl);
 
             notifierService.trigger(PortalHook.PASSWORD_RESET, params);
 

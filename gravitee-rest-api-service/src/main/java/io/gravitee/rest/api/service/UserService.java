@@ -49,6 +49,7 @@ public interface UserService {
     PictureEntity getPicture(String id);
     void delete(String id);
     void resetPassword(String id);
+    void resetPassword(String id, String resetPageUrl);
     Map<String, Object> getTokenRegistrationParams(UserEntity userEntity, String portalUri, ACTION action);
     Map<String, Object> getTokenRegistrationParams(UserEntity userEntity, String portalUri, ACTION action, String confirmationPageUrl);
     UserEntity create(NewExternalUserEntity newExternalUserEntity);

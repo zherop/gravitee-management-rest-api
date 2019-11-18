@@ -2298,6 +2298,36 @@
 										}
 									},
 									"response": []
+								},
+								{
+									"name": "POST /user/_reset_password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "5ddbd8bd-5493-4791-8a3c-58e22e4efea8",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{portal_url}}/user/_reset_password",
+											"host": [
+												"{{portal_url}}"
+											],
+											"path": [
+												"user",
+												"_reset_password"
+											]
+										}
+									},
+									"response": []
 								}
 							],
 							"description": "All anonymous requests to /users and /user/... should return 401",
@@ -4551,6 +4581,36 @@
 											"key": "notificationId",
 											"value": "NOTIFICATION"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST /user/_reset_password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5ddbd8bd-5493-4791-8a3c-58e22e4efea8",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{portal_url}}/user/_reset_password",
+									"host": [
+										"{{portal_url}}"
+									],
+									"path": [
+										"user",
+										"_reset_password"
 									]
 								}
 							},

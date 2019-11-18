@@ -9629,6 +9629,58 @@
 									"response": []
 								},
 								{
+									"name": "POST /user/_reset_password",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "985561b7-2543-4d18-b53a-3ab9b7a200eb",
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {",
+													"    pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"Input must not be null.\", function () {",
+													"    var jsonData = pm.response.json();",
+													"    pm.expect(jsonData.errors[0].detail).to.eql(\"Input must not be null.\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "basic",
+											"basic": [
+												{
+													"key": "password",
+													"value": "password",
+													"type": "string"
+												},
+												{
+													"key": "username",
+													"value": "user",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{portal_url}}/user/_reset_password",
+											"host": [
+												"{{portal_url}}"
+											],
+											"path": [
+												"user",
+												"_reset_password"
+											]
+										}
+									},
+									"response": []
+								},
+								{
 									"name": "POST /users/registration - input must not be null",
 									"event": [
 										{
@@ -9915,6 +9967,148 @@
 										}
 									},
 									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Not Internally managed",
+							"item": [
+								{
+									"name": "-- Prepare --",
+									"item": [
+										{
+											"name": "Get admin user id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "579bcfa5-e7d4-4632-a3b0-f8e06acbd2f6",
+														"exec": [
+															"var jsonData = pm.response.json();",
+															"pm.environment.set(\"admin_user_id\", jsonData.id);",
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{managment_url}}/user",
+													"host": [
+														"{{managment_url}}"
+													],
+													"path": [
+														"user"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "-- Test --",
+									"item": [
+										{
+											"name": "POST /user/_reset_password",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "78d0cbc2-d033-4aef-900b-4c6c1d7f77c5",
+														"exec": [
+															"pm.test(\"Status code is 400\", function () {",
+															"    pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"Not Internally managed user.\", function () {",
+															"    var jsonData = pm.response.json();",
+															"    pm.expect(jsonData.errors[0].detail).to.eql(\"The user with id \" + pm.environment.get(\"admin_user_id\") + \" is not internally managed.\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"name": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n\t\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{portal_url}}/user/_reset_password",
+													"host": [
+														"{{portal_url}}"
+													],
+													"path": [
+														"user",
+														"_reset_password"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								}
+							],
+							"auth": {
+								"type": "basic",
+								"basic": [
+									{
+										"key": "password",
+										"value": "admin",
+										"type": "string"
+									},
+									{
+										"key": "username",
+										"value": "admin",
+										"type": "string"
+									}
+								]
+							},
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5fd1e7e5-53bd-4963-b15a-0014f64c0510",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "835ccc7c-68b1-4684-9e4c-dcc9c162591d",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
 								}
 							],
 							"protocolProfileBehavior": {},
