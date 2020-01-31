@@ -44,8 +44,8 @@ public class ManagementNode extends AbstractNode {
     @Override
     public List<Class<? extends LifecycleComponent>> components() {
         final List<Class<? extends LifecycleComponent>> components = super.components();
-        components.add(JettyEmbeddedContainer.class);
         components.add(InitializerService.class);
+        components.add(JettyEmbeddedContainer.class);
         components.add(AlertTriggerProviderManager.class);
         components.add(AlertEventProducerManager.class);
         return components;

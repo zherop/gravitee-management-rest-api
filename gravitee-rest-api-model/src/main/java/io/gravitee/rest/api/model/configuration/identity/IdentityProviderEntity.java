@@ -55,6 +55,8 @@ public class IdentityProviderEntity {
     @JsonProperty("updated_at")
     private Date updatedAt;
 
+    private int order;
+    
     public String getId() {
         return id;
     }
@@ -149,6 +151,14 @@ public class IdentityProviderEntity {
 
     public void setEmailRequired(boolean emailRequired) {
         this.emailRequired = emailRequired;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     @Override

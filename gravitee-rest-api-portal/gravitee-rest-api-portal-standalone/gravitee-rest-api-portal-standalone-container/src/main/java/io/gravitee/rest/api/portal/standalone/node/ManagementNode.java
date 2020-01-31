@@ -33,19 +33,18 @@ public class ManagementNode extends AbstractNode {
 
     @Override
     public String name() {
-        return "Gravitee.io - Management API";
+        return "Gravitee.io - Portal REST API";
     }
 
     @Override
     public String application() {
-        return "gio-apim-management";
+        return "gio-apim-portal";
     }
 
     @Override
     public List<Class<? extends LifecycleComponent>> components() {
         final List<Class<? extends LifecycleComponent>> components = super.components();
         components.add(JettyEmbeddedContainer.class);
-        components.add(InitializerService.class);
         components.add(AlertTriggerProviderManager.class);
         components.add(AlertEventProducerManager.class);
         return components;

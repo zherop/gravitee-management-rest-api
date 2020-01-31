@@ -44,6 +44,8 @@ public class IdentityProviderListItem {
     @JsonProperty("updated_at")
     private Date updatedAt;
 
+    private int order;
+
     public String getId() {
         return id;
     }
@@ -98,6 +100,14 @@ public class IdentityProviderListItem {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     @Override

@@ -45,6 +45,8 @@ public class UpdateIdentityProviderEntity {
 
     private boolean emailRequired;
 
+    private int order;
+
     public String getName() {
         return name;
     }
@@ -107,6 +109,14 @@ public class UpdateIdentityProviderEntity {
 
     public void setEmailRequired(boolean emailRequired) {
         this.emailRequired = emailRequired;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     @Override
