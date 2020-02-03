@@ -21,6 +21,7 @@ import io.gravitee.alert.api.condition.Filter;
 import io.gravitee.alert.api.condition.StringCondition;
 import io.gravitee.alert.api.trigger.Trigger;
 import io.gravitee.alert.api.trigger.TriggerProvider;
+import io.gravitee.alert.api.trigger.command.Command;
 import io.gravitee.common.utils.UUID;
 import io.gravitee.management.model.alert.*;
 import io.gravitee.management.model.parameters.Key;
@@ -377,6 +378,13 @@ public class AlertServiceImpl extends TransactionalService implements AlertServi
             @Override
             public void doOnDisconnect() {
                 LOGGER.error("Connection with the alerting system has been loose.");
+            }
+        });
+
+        triggerProvider.addListener(new TriggerProvider.OnCommandListener() {
+            @Override
+            public void doOnCommand(Command command) {
+                System.out.println(command);
             }
         });
     }
